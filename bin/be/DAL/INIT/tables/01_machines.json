@@ -1,0 +1,33 @@
+{
+  "columns":[
+    {
+      "allow_null":false,
+      "name":"name",
+      "size":100,
+      "type":"varchar"
+    },
+    {
+      "name":"id",
+      "type":"serial"
+    }
+  ],
+  "constraints":[
+    {
+      "primary_key":{
+        "columns":[
+          "id"
+        ],
+        "name":"pk_id",
+        "on_delete":"CASCADE",
+        "on_update":"CASCADE"
+      },
+      "unique":{
+        "columns":[
+          "id"
+        ],
+        "name":"unique_id"
+      }
+    }
+  ],
+  "table_name":"machines"
+}
