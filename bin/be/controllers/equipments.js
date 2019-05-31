@@ -1,19 +1,6 @@
 var dal = require('../DAL');
 
 module.exports = {
-    create: function (req, res) {
-        if(req.body.name && req.body.projectid){
-            dal.equipments.create(req.body.name, req.body.projectid, function(err,response){
-                if(!err){
-                    res.status(201).end();
-                }else{
-                    res.status(500).json(err);
-                }
-            })
-        }else{
-            res.status(422).json({message: "Missing required fields"})
-        }
-    },
     get: function (req, res) {
         if (req.query.project) {
             //get equipments from project
@@ -30,6 +17,26 @@ module.exports = {
             res.status(501).end();
         }
     },
+    create: function (req, res) {
+        if(req.body.name && req.body.projectid){
+            dal.equipments.create(req.body.name, req.body.projectid, function(err,response){
+                if(!err){
+                    res.status(201).end();
+                }else{
+                    res.status(500).json(err);
+                }
+            })
+        }else{
+            res.status(422).json({message: "Missing required fields"})
+        }
+    },
+    update: function (req, res) {
+        if (true) {
+            res.status(501).json({message: "Not implemented"})
+        } else {
+            res.status(422).json({message: "Missing required fields"})
+        }
+    },
     delete: function(req,res){
         if(req.query.id){
             dal.equipments.delete(req.query.id, function(err,response){
@@ -42,5 +49,5 @@ module.exports = {
         }else{
             res.status(422).json({message: "Missing required parameter"});
         }
-    }
+    },
 }
