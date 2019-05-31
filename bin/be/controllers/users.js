@@ -37,6 +37,13 @@ module.exports = {
             res.status(422).json({ message: "Missing required parameters" })
         }
     },
+    update: function (req, res) {
+        if (true) {
+            res.status(501).json({message: "Not implemented"})
+        } else {
+            res.status(422).json({message: "Missing required fields"})
+        }
+    },
     delete: function (req, res) {
         if (req.query.id) {
             dal.users.deleteById(req.query.id, function (err, answer) {
@@ -49,5 +56,5 @@ module.exports = {
         } else {
             res.status(422).json({ message: "Missing required field" })
         }
-    }
+    },
 }
