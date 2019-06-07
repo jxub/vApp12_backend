@@ -13,8 +13,6 @@ router.route("/test").get((req, res) => {
 router.route("/register").post(ctl.auth.register);
 router.route("/login").post(ctl.auth.login);
 
-// --------
-
 // accounts
 router.route("/accounts").get(ctl.accounts.get);
 router.route("/accounts").post(ctl.accounts.create);
@@ -30,14 +28,7 @@ router.route("/alarms").delete(ctl.alarms.delete);
 // alarmtypes
 router.route("/alarmtypes").get(ctl.alarmtypes.get);
 router.route("/alarmtypes").post(ctl.alarmtypes.create);
-router.route("/alarmtypes").patch(ctl.alarmtypes.update);
 router.route("/alarmtypes").delete(ctl.alarmtypes.delete);
-
-// equipments
-router.route("/equipments").get(ctl.equipments.get);
-router.route("/equipments").post(ctl.equipments.create);
-router.route("/equipments").patch(ctl.equipments.update);
-router.route("/equipments").delete(ctl.equipments.delete);
 
 // failuretypes
 router.route("/failuretypes").get(ctl.failuretypes.get);
@@ -57,17 +48,8 @@ router.route("/machines").post(ctl.machines.create);
 router.route("/machines").patch(ctl.machines.update);
 router.route("/machines").delete(ctl.machines.delete);
 
-// projects
-router.route("/projects").get(ctl.projects.get);
-router.route("/projects").post(ctl.projects.create);
-router.route("/projects").patch(ctl.projects.update);
-router.route("/projects").delete(ctl.projects.delete);
-
 // stats
 router.route("/stats").get(ctl.stats.get);
-router.route("/stats").post(ctl.stats.create);
-router.route("/stats").patch(ctl.stats.update);
-router.route("/stats").delete(ctl.stats.delete);
 
 // users
 router.route("/users").get(ctl.users.get);

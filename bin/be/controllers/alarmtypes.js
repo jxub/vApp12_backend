@@ -30,6 +30,7 @@ module.exports = {
     }
   },
   update(req, res) {
+    // TODO: not really needed, remove
     if (req.query.code) {
       if ("name" in req.body) {
         alarmtypes
@@ -50,8 +51,17 @@ module.exports = {
     }
   },
   delete(req, res) {
-    if (true) {
-      res.status(501).json({ message: "Not implemented" });
+    if ("code" in req.query) {
+      alarmtypes
+        .delete({ code: req.query.code })
+        .then(resp => {
+          logger.debug(resp);
+          res.status(200).send(resp);
+        })
+        .catch(err => {
+          logger.error(err);
+          res.status(500).end();
+        });
     } else {
       res.status(422).json({ message: "Missing required fields" });
     }

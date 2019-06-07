@@ -11,6 +11,7 @@ const jwt = require("express-jwt");
 const cors = require("cors");
 const config = require("./config.json");
 const logger = require("./logger");
+const morgan = require("morgan");
 
 // express app
 const app = express();
@@ -22,13 +23,9 @@ if (config.cors.allow) {
 }
 
 // middleware configuration
-app.use(logger("dev"));
+app.use(morgan("dev"));
 app.use(bodyParser.json());
-app.use(
-  bodyParser.urlencoded({
-    extended: false
-  })
-);
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(expressValidator());
 

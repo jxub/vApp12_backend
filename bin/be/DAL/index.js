@@ -6,5 +6,6 @@ module.exports = {
   users: require("./users"),
   equipments: require("./equipments"),
   init: require("./init"),
+  interventions: require("./interventions"),
   alarms: require("./accounts")
 };
