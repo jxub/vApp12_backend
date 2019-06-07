@@ -13,7 +13,7 @@ module.exports = {
       alarms
         .getById(req.query.id)
         .then(resp => {
-          logger.info(resp);
+          logger.debug(resp);
           req.status(200).send(resp);
         })
         .catch(err => {
@@ -25,7 +25,7 @@ module.exports = {
       alarms
         .getByCompany(req.query.company)
         .then(resp => {
-          logger.info(resp);
+          logger.debug(resp);
           req.status(200).send(resp);
         })
         .catch(err => {
@@ -38,7 +38,7 @@ module.exports = {
       alarms
         .getByUser(req.user.id)
         .then(resp => {
-          logger.info(resp);
+          logger.debug(resp);
           req.status(200).send(resp);
         })
         .catch(err => {
@@ -146,7 +146,7 @@ module.exports = {
       alarms
         .delete(req.query.id)
         .then(resp => {
-          logger.info(resp);
+          logger.debug(resp);
           req.status(200).send(resp);
         })
         .catch(err => {
