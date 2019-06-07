@@ -45,7 +45,7 @@ module.exports = {
     }
   },
   update(req, res) {
-    if (true) {
+    if (req) {
       res.status(501).json({ message: "Not implemented" });
     } else {
       res.status(422).json({ message: "Missing required fields" });

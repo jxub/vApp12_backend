@@ -3,7 +3,7 @@
 module.exports = {
   accounts: require("./accounts"),
   alarms: require("./alarm"),
-  alarmtypes: require("./alarmtype"),
+  alarmtypes: require("./alarmtypes"),
   auth: require("./auth"),
   equipments: require("./equipments"),
   failuretypes: require("./failuretype"),
