@@ -1,5 +1,5 @@
-var storage = require('./storageRequester');
-var syncstorage = require('./syncStorageRequester');
+var storage = require('./storage');
+var syncstorage = require('./syncstorage');
 var config = require('../config.json');
 var request = require('request');
 var myforEach = require("async-foreach").forEach;

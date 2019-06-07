@@ -1,4 +1,4 @@
-var storage = require('./storageRequester');
+var storage = require('./storage');
 
 module.exports = {
     getByProjectId: function (projectid, cb) {

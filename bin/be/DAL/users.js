@@ -1,7 +1,7 @@
 /* eslint-disable func-names */
 /* eslint-disable no-unused-vars */
 
-const storage = require("./storageRequester");
+const storage = require("./storage");
 
 module.exports = {
   create(accid, projectid, cb) {

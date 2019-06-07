@@ -4,7 +4,7 @@ var request = require('request');
 var jwt = require('jsonwebtoken');
 var crypto = require('crypto');
 var config = require('../config.json');
-var storage = require('./storageRequester');
+var storage = require('./storage');
 
 var _genSalt = function (password) {
     return crypto.randomBytes(16).toString('hex');
