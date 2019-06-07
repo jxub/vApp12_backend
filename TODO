@@ -1,0 +1,6 @@
+- implement calls from data.service.ts with the DAL
+
+
+- remove in-memory-data.service.ts http calls interceptor from the frontend or ask Victor for interceptor
+ this way, api calls to the BE can be made. For that, comment the HttpClientInMemoryWebApiModule
+ in the app.module.ts of the frontend.
