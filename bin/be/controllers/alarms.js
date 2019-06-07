@@ -3,21 +3,23 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 
-const logger = require("./../logger");
-const dal = require("./../DAL");
-const alarms = require("./../DAL/alarms");
+const logger = require("../logger");
+const alarms = require("../DAL/alarms");
 
 module.exports = {
   get(req, res) {
     if (req.query.id) {
       // `getAlarm`
-      alarms.getById(req.user.id, req.query.id, (err, resp) => {
-        if (err) {
-          req.status(500).end();
-        } else {
+      alarms
+        .getById(req.query.id)
+        .then(resp => {
+          logger.info(resp);
           req.status(200).send(resp);
-        }
-      });
+        })
+        .catch(err => {
+          logger.error(err);
+          req.status(500).end();
+        });
     } else if (req.query.company) {
       // `getAlarmsByCompany``
       alarms
@@ -32,13 +34,17 @@ module.exports = {
         });
     } else {
       // `getAlarms`
-      dal.projects.getByAllocation(req.user.id, function(err, answer) {
-        if (!err) {
-          res.status(200).send(answer);
-        } else {
-          res.status(500).end();
-        }
-      });
+      // TODO: not implemented!
+      alarms
+        .getByUser(req.user.id)
+        .then(resp => {
+          logger.info(resp);
+          req.status(200).send(resp);
+        })
+        .catch(err => {
+          logger.error(err);
+          req.status(500).json({ message: err.message });
+        });
     }
   },
   create(req, res) {
@@ -137,14 +143,16 @@ module.exports = {
   },
   delete(req, res) {
     if (req.query.id) {
-      dal.projects.delete(req.query.id, function(err, answer) {
-        if (!err) {
-          res.status(200).send(answer);
-        } else {
-          res.status(500).end();
-        }
-      });
-      alarms.delete(req.query.id);
+      alarms
+        .delete(req.query.id)
+        .then(resp => {
+          logger.info(resp);
+          req.status(200).send(resp);
+        })
+        .catch(err => {
+          logger.error(err);
+          req.status(500).end();
+        });
     } else {
       res.status(422).json({
         message: "Missing required field Request ID in the query string"

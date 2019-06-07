@@ -26,27 +26,37 @@ module.exports = {
       }
     );
   },
-  getById(AccountId, ProjectId, cb) {
+  getById(alarmID) {
     storage(
       "GET",
-      `/tables/allocated_projects/rows?filter=idaccounts='${AccountId}' and idprojects='${ProjectId}'`,
+      `/tables/alarms/rows?filter=id='${alarmID}'`,
       {},
       // eslint-disable-next-line no-unused-vars
       (error, response, _body) => {
-        if (!error) {
-          let json;
-          if (response.statusCode === 200) {
-            json = JSON.parse(response.body);
-            cb(false, json.list_of_rows[0]);
+        return new Promise((resolve, reject) => {
+          if (!error) {
+            let json;
+            if (response.statusCode === 200) {
+              json = JSON.parse(response.body);
+              resolve({ message: json.list_of_rows[0] });
+            } else {
+              json = JSON.parse(response.body);
+              reject(
+                new Error(`Error retrieving alarm by ID: ${json.message}`)
+              );
+            }
           } else {
-            json = JSON.parse(response.body);
-            cb(false, json.message);
+            reject(new Error("Relational Storage Component not responding"));
           }
-        } else {
-          cb(true, "Relational Storage Component not responding");
-        }
+        });
       }
     );
+  },
+  // eslint-disable-next-line no-unused-vars
+  getByUser(userID) {
+    return new Promise((resolve, reject) => {
+      reject(new Error("get by User not implemented"));
+    });
   },
   getByName(alarmName) {
     storage(
@@ -159,17 +169,22 @@ module.exports = {
       }
     );
   },
-  updateDescription(projectId, newDescription, cb) {
+  updateDescription(projectId, newDescription) {
     storage(
       "PATCH",
       `/tables/alarms/rows?filter=id=${projectId}`,
       { description: newDescription },
-      function(error, _response, _body) {
-        if (!error) {
-          cb(false, { message: "Project is updated" });
-        } else {
-          cb(true, "Relational Storage Component not responding");
-        }
+      // eslint-disable-next-line no-unused-vars
+      (error, response, _body) => {
+        return new Promise((resolve, reject) => {
+          if (!error) {
+            resolve({ message: "Alarm description updated" });
+          } else {
+            reject(
+              new Error(`Alarm description could not be updated ${response}`)
+            );
+          }
+        });
       }
     );
   },

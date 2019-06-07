@@ -1,4 +1,6 @@
 // const dal = require('../DAL');
+// connect to the driver interface to recover machine names and device id
+// https://vfos-docs.ascora.eu/#get-data-from-sensor
 
 module.exports = {
   get(req, res) {

@@ -2,13 +2,13 @@
 
 module.exports = {
   accounts: require("./accounts"),
-  alarms: require("./alarm"),
+  alarms: require("./alarms"),
   alarmtypes: require("./alarmtypes"),
   auth: require("./auth"),
   equipments: require("./equipments"),
   failuretypes: require("./failuretype"),
-  interventions: require("./intervention"),
-  machines: require("./machine"),
+  interventions: require("./interventions"),
+  machines: require("./machines"),
   projects: require("./projects"),
   stats: require("./stats"),
   users: require("./users")

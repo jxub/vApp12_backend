@@ -22,10 +22,10 @@ router.route("/accounts").patch(ctl.accounts.update);
 router.route("/accounts").delete(ctl.accounts.delete);
 
 // alarms
-router.route("/alarms").get(ctl.projects.get);
-router.route("/alarms").post(ctl.projects.create);
-router.route("/alarms").patch(ctl.projects.update);
-router.route("/alarms").delete(ctl.projects.delete);
+router.route("/alarms").get(ctl.alarms.get);
+router.route("/alarms").post(ctl.alarms.create);
+router.route("/alarms").patch(ctl.alarms.update);
+router.route("/alarms").delete(ctl.alarms.delete);
 
 // alarmtypes
 router.route("/alarmtypes").get(ctl.alarmtypes.get);

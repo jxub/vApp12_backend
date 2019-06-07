@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable func-names */
 
 const dal = require("../DAL");
@@ -16,5 +17,9 @@ module.exports = {
       // not implemented
       res.status(501).end();
     }
-  }
+  },
+
+  create(req, res) {},
+  update(req, res) {},
+  delete(req, res) {}
 };
