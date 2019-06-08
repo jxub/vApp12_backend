@@ -8,7 +8,7 @@ require("app-module-path").addPath(baseDir);
 const debug = require("debug")("vfos-usecase:server");
 const http = require("http");
 
-const dal = require("./DAL");
+const dal = require("./dal");
 const app = require("./app");
 
 /**
@@ -154,7 +154,7 @@ function onListening() {
   const addr = server.address();
   const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
-  console.log("INIT DB...");
+  console.log("schema DB...");
   init();
 }
 /**

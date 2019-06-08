@@ -232,18 +232,18 @@ module.exports = {
 
         // let initTables =
         //     [
-        //         require('./INIT/tables/01_roles.json'),
-        //         require('./INIT/tables/02_accounts.json'),
-        //         require('./INIT/tables/03_projects.json'),
-        //         require('./INIT/tables/04_users.json'),
-        //         require('./INIT/tables/05_equipments.json'),
-        //         require('./INIT/tables/06_slumps.json'),
-        //         require('./INIT/tables/07_notifications.json')
+        //         require('./schema/tables/01_roles.json'),
+        //         require('./schema/tables/02_accounts.json'),
+        //         require('./schema/tables/03_projects.json'),
+        //         require('./schema/tables/04_users.json'),
+        //         require('./schema/tables/05_equipments.json'),
+        //         require('./schema/tables/06_slumps.json'),
+        //         require('./schema/tables/07_notifications.json')
         //     ]
 
 
         //TABLES
-        let initTables = readFilesFromFolder('/INIT/tables');
+        let initTables = readFilesFromFolder('/schema/tables');
         let thisResponse = [];
 
         myforEach(initTables, function (tableInit, index, arr) {

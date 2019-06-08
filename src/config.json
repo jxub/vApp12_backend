@@ -14,8 +14,8 @@
     },
     "files":{
         "db": {
-            "tables": "/INIT/tables",
-            "views": "/INIT/views"
+            "tables": "/schema/tables",
+            "views": "/schema/views"
         }
     }
 }
