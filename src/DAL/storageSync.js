@@ -1,5 +1,5 @@
 const syncrequest = require("sync-request");
-const config = require("../config.json");
+const config = require("../config/config.json");
 
 // eslint-disable-next-line func-names
 module.exports = (method, path, payload) => {

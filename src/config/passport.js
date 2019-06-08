@@ -5,7 +5,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
-const dal = require("./dal");
+const accounts = require("./../dal/accounts");
 
 passport.use(
   new LocalStrategy(
@@ -14,14 +14,14 @@ passport.use(
     },
     function(username, password, done) {
       console.log("using passport...");
-      dal.accounts.getbyUserName(username, function(e, user) {
+      accounts.getbyUserName(username, function(e, user) {
         if (e) {
           return done(e);
         }
         if (!user) {
           return done(null, false, { message: "Account not found" });
         }
-        if (!dal.accounts.validPassword(user, password)) {
+        if (!accounts.validPassword(user, password)) {
           return done(null, false, { message: "Password is wrong" });
         }
         // do not return the hash and salt

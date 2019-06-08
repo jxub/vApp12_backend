@@ -1,5 +1,5 @@
 const interventions = require("../dal/interventions");
-const logger = require("./../logger");
+const logger = require("../config/logger");
 
 module.exports = {
   get(req, res) {

@@ -1,5 +1,5 @@
 const failuretypes = require("../dal/failuretypes");
-const logger = require("./../logger");
+const logger = require("../config/logger");
 
 module.exports = {
   get(req, res) {

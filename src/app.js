@@ -10,8 +10,8 @@ const passport = require("passport");
 const jwt = require("express-jwt");
 const cors = require("cors");
 const morgan = require("morgan");
-const config = require("./config.json");
-const logger = require("./logger");
+const config = require("./config/config.json");
+const logger = require("./config/logger");
 
 // express app
 const app = express();
@@ -30,7 +30,7 @@ app.use(cookieParser());
 app.use(expressValidator());
 
 // authentication
-require("./passport");
+require("./config/passport");
 
 app.use(passport.initialize());
 
@@ -44,7 +44,7 @@ app.use(
   })
 );
 // set API routes
-app.use("/api", require("./router"));
+app.use("/api", require("./routes"));
 
 // set Angular static files
 app.use(

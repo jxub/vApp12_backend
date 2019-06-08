@@ -3,7 +3,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 
-const logger = require("../logger");
+const logger = require("../config/logger");
 const alarms = require("../dal/alarms");
 
 module.exports = {

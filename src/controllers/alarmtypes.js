@@ -1,5 +1,5 @@
 const alarmtypes = require("../dal/alarmtypes");
-const logger = require("./../logger");
+const logger = require("../config/logger");
 
 module.exports = {
   // eslint-disable-next-line no-unused-vars

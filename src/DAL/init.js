@@ -1,6 +1,6 @@
 var storage = require('./storage');
 var syncstorage = require('./syncstorage');
-var config = require('../config.json');
+var config = require('../config/config.json');
 var request = require('request');
 var myforEach = require("async-foreach").forEach;
 var path = require('path');
