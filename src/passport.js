@@ -5,7 +5,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
-const dal = require("./DAL");
+const dal = require("./dal");
 
 passport.use(
   new LocalStrategy(

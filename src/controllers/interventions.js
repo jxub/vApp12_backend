@@ -1,4 +1,4 @@
-const interventions = require("./../DAL/interventions");
+const interventions = require("../dal/interventions");
 const logger = require("./../logger");
 
 module.exports = {

@@ -1,4 +1,4 @@
-const alarmtypes = require("./../DAL/alarmtypes");
+const alarmtypes = require("../dal/alarmtypes");
 const logger = require("./../logger");
 
 module.exports = {

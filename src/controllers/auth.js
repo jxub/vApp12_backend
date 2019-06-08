@@ -1,5 +1,5 @@
 const passport = require("passport");
-const dal = require("../DAL");
+const dal = require("../dal");
 
 module.exports = {
   register(req, res) {

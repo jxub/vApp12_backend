@@ -1,4 +1,4 @@
-const failuretypes = require("./../DAL/failuretypes");
+const failuretypes = require("../dal/failuretypes");
 const logger = require("./../logger");
 
 module.exports = {

@@ -4,7 +4,7 @@
 /* eslint-disable no-underscore-dangle */
 
 const logger = require("../logger");
-const alarms = require("../DAL/alarms");
+const alarms = require("../dal/alarms");
 
 module.exports = {
   get(req, res) {

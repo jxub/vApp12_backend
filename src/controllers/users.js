@@ -1,7 +1,7 @@
 /* eslint-disable func-names */
 /* eslint-disable no-unused-vars */
 
-const dal = require("../DAL");
+const dal = require("../dal");
 
 module.exports = {
   get(req, res) {
