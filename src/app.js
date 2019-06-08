@@ -9,9 +9,9 @@ const expressValidator = require("express-validator");
 const passport = require("passport");
 const jwt = require("express-jwt");
 const cors = require("cors");
+const morgan = require("morgan");
 const config = require("./config.json");
 const logger = require("./logger");
-const morgan = require("morgan");
 
 // express app
 const app = express();
