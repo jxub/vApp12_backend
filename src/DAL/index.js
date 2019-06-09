@@ -2,10 +2,12 @@
 
 module.exports = {
   accounts: require("./accounts"),
-  projects: require("./projects"),
-  users: require("./users"),
-  equipments: require("./equipments"),
+  alarms: require("./alarms"),
+  alarmtypes: require("./alarmtypes"),
+  failuretypes: require("./failuretypes"),
   init: require("./init"),
   interventions: require("./interventions"),
-  alarms: require("./accounts")
+  machines: require("./machines"),
+  stats: require("./stats"),
+  users: require("./users")
 };

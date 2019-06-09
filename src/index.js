@@ -8,6 +8,7 @@ require("app-module-path").addPath(baseDir);
 const debug = require("debug")("vfos-usecase:server");
 const http = require("http");
 
+const logger = require("./config/logger");
 const dal = require("./dal");
 const app = require("./app");
 
@@ -35,7 +36,7 @@ function normalizePort(val) {
  * Get port from environment and store in Express.
  */
 const port = normalizePort(process.env.PORT || "4200");
-console.info("backend is running internally at ", port);
+logger.info("backend is running internally at ", port);
 app.set("port", port);
 
 /**
@@ -49,73 +50,73 @@ const server = http.createServer(app);
  */
 
 function init() {
-  console.log("Checking DB...");
+  logger.info("Checking DB...");
   dal.init.dbExists(function(exists) {
     if (exists) {
-      console.log("OK");
-      console.log("Checking tables...");
+      logger.info("OK");
+      logger.info("Checking tables...");
       dal.init.tablesExistsAndCreates(function(tablesdone) {
         if (tablesdone) {
-          console.log("Checking tables - DONE");
-          console.log("Checking views...");
+          logger.info("Checking tables - DONE");
+          logger.info("Checking views...");
           dal.init.viewsExistsAndCreates(function(viewsdone) {
             if (viewsdone) {
-              console.log("Checking views - DONE");
-              console.log("Checking roles...");
+              logger.info("Checking views - DONE");
+              logger.info("Checking roles...");
               dal.init.checkRoles(function(rolesExist) {
                 if (rolesExist) {
-                  console.log("Checking roles - DONE");
+                  logger.info("Checking roles - DONE");
                 } else {
-                  console.log("Creating roles...");
+                  logger.info("Creating roles...");
                   dal.init.createRoles(function(rolesdone) {
                     if (rolesdone) {
-                      console.log("Creating roles - DONE");
+                      logger.info("Creating roles - DONE");
                     } else {
-                      console.log("NOT IMPLEMENTED :(");
+                      logger.info("NOT IMPLEMENTED :(");
                     }
                   });
                 }
               });
             } else {
-              console.log("NOT IMPLEMENTED :(");
-              console.log("Creating roles...");
+              logger.info("NOT IMPLEMENTED :(");
+              logger.info("Creating roles...");
               dal.init.createRoles(function(rolesdone) {
                 if (rolesdone) {
-                  console.log("Creating roles - DONE");
+                  logger.info("Creating roles - DONE");
                 } else {
-                  console.log("NOT IMPLEMENTED :(");
+                  logger.info("NOT IMPLEMENTED :(");
                 }
               });
             }
           });
         } else {
-          console.log("NOT IMPLEMENTED :(");
+          logger.info("NOT IMPLEMENTED :(");
         }
       });
     } else {
-      console.log("DB does not exist");
-      console.log("Creating DB");
+      logger.info("DB does not exist");
+      logger.info("Creating DB");
       dal.init.createDB(function(ok) {
         if (ok) {
-          console.log("DB created");
-          console.log("Creating tables");
+          logger.info("DB created");
+          logger.info("Creating tables");
           dal.init.tablesExistsAndCreates(function(tablesdone) {
             if (tablesdone) {
-              console.log("Creating tables - DONE");
-              console.log("Checking views...");
+              logger.info("Creating tables - DONE");
+              logger.info("Checking views...");
               dal.init.viewsExistsAndCreates(function(viewsdone) {
                 if (viewsdone) {
-                  console.log("Creating views - DONE");
+                  logger.info("Creating views - DONE");
                 } else {
-                  console.log("NOT IMPLEMENTED :(");
+                  logger.info("NOT IMPLEMENTED :(");
                 }
               });
             } else {
-              console.log("NOT IMPLEMENTED :(");
+              logger.info("NOT IMPLEMENTED :(");
             }
           });
         } else {
-          console.log("something went wrong on db creation...");
+          logger.info("something went wrong on db creation...");
         }
       });
     }
@@ -135,11 +136,11 @@ function onError(error) {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case "EACCES":
-      console.error(`${bind} requires elevated privileges`);
+      logger.error(`${bind} requires elevated privileges`);
       process.exit(1);
       break;
     case "EADDRINUSE":
-      console.error(`${bind} is already in use`);
+      logger.error(`${bind} is already in use`);
       process.exit(1);
       break;
     default:
@@ -154,7 +155,7 @@ function onListening() {
   const addr = server.address();
   const bind = typeof addr === "string" ? `pipe ${addr}` : `port ${addr.port}`;
   debug(`Listening on ${bind}`);
-  console.log("schema DB...");
+  logger.info("schema DB...");
   init();
 }
 /**
