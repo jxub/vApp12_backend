@@ -4,7 +4,7 @@
 /* eslint-disable no-underscore-dangle */
 
 const logger = require("../config/logger");
-const conn = require("../config/knex");
+const knex = require("../config/knex");
 const alarms = require("../dal/alarms");
 
 module.exports = {
@@ -12,11 +12,11 @@ module.exports = {
     if (req.query.id) {
       // `getAlarm`
       // ejemplo:
-      // Usar el objeto conn y con knex (https://knexjs.org)
+      // Usar el objeto knex y con knex (https://knexjs.org)
       // construir y ejecutar las queries.
       // Devolver el resultado con express.
       // TODO
-      conn
+      knex
         .select("id", "origin")
         .from("alarms")
         .then(vals => {
