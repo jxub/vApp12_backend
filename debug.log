@@ -1,0 +1,88 @@
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"schema DB...","level":"info"}
+{"message":"Checking DB...","level":"info"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"loaded schema","level":"info"}
+{"message":"created the database","level":"info"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"loaded schema","level":"info"}
+{"message":"created the database","level":"info"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"loaded schema","level":"info"}
+{"message":"created the database","level":"info"}
+{"level":"error"}
+{"message":"destroyed the database","level":"info"}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"loaded schema","level":"info"}
+{"message":"created the database","level":"info"}
+{"level":"error"}
+{"message":"destroyed the database","level":"info"}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"loaded schema","level":"info"}
+{"message":"created the database","level":"info"}
+{"level":"error"}
+{"message":"destroyed the database","level":"info"}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"loaded schema","level":"info"}
+{"message":"created the database","level":"info"}
+{"level":"error"}
+{"message":"destroyed the database","level":"info"}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"loaded schema","level":"info"}
+{"message":"created the database","level":"info"}
+{"level":"error"}
+{"message":"destroyed the database","level":"info"}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"loaded schema","level":"info"}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"created the database","level":"info"}
+{"level":"error"}
+{"message":"destroyed the database","level":"info"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"loaded schema","level":"info"}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"created the database","level":"info"}
+{"message":"destroyed the database","level":"info"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"loaded schema","level":"info"}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"created the database","level":"info"}
+{"message":"destroyed the database","level":"info"}
+{"level":"error"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"message":"loaded schema","level":"info"}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"created the database","level":"info"}
+{"message":"destroyed the database","level":"info"}
+{"level":"error"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"created the database","level":"info"}
+{"message":"destroyed the database","level":"info"}
+{"level":"error"}
+{"message":"CORS is allowed!","level":"info"}
+{"level":"info","message":"backend is running internally at "}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"created the database","level":"info"}
+{"message":"destroyed the database","level":"info"}
+{"level":"error"}
