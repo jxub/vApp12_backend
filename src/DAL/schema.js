@@ -5,40 +5,44 @@ const logger = require("../config/logger");
 if (!conn.fn.now()) {
   throw new Error("revise the code");
 }
-  
+
 const machineSchemaDescription = table => {
-  table.increments("id");
+  table.increments("id").primary();
   table.string("name");
 };
 
 const roleSchemaDescription = table => {
-  table.increments("id");
+  table.increments("id").primary();
   table.string("description");
   table.string("account_type");
 };
 
 const accountSchemaDescription = table => {
-  table.increments("id");
+  table.increments("id").primary();
   table.string("user_name");
   table.string("user_hash");
   table.string("user_salt");
-  table.foreign("role_id").references("roles.id");
+  table.integer("role_id").unsigned();
+  table
+    .foreign("role_id")
+    .references("id")
+    .inTable("roles");
 };
 
 const alarmtypeSchemaDescription = table => {
-  table.increments("id");
+  table.increments("id").primary();
   table.string("name");
   table.string("code");
 };
 
 const failuretypeSchemaDescription = table => {
-  table.increments("id");
+  table.increments("id").primary();
   table.string("name");
   table.string("code");
 };
 
 const projectSchemaDescription = table => {
-  table.increments("id");
+  table.increments("id").primary();
   table.string("name").notNullable();
   table.string("description").notNullable();
   table.boolean("status").notNullable();
@@ -46,36 +50,68 @@ const projectSchemaDescription = table => {
 };
 
 const userSchemaDescription = table => {
-  table.increments("id");
-  table.foreign("project_id").references("projects.id");
-  table.foreign("account_id").references("accounts.id");
+  table.increments("id").primary();
+  table.integer("project_id").unsigned();
+  table.integer("account_id").unsigned();
+  table
+    .foreign("project_id")
+    .references("id")
+    .inTable("projects");
+  table
+    .foreign("account_id")
+    .references("id")
+    .inTable("accounts");
 };
 
 const equipmentSchemaDescription = table => {
-  table.increments("id");
+  table.increments("id").primary();
   table.string("name");
-  table.foreign("project_id").references("project.id");
+  table.integer("project_id").unsigned();
+  table
+    .foreign("project_id")
+    .references("id")
+    .inTable("projects");
 };
 
 const slumpSchemaDescription = table => {
-  table.increments("id");
+  table.increments("id").primary();
   table.integer("value");
   table.date("date").defaultTo(conn.fn.now());
-  table.foreign("equipment_id").references("equipments.id");
-  table.foreign("project_id").references("projects.id");
-  table.foreign("account_id").references("accounts.id");
+  table.integer("equipment_id").unsigned();
+  table.integer("project_id").unsigned();
+  table.integer("account_id").unsigned();
+  table
+    .foreign("equipment_id")
+    .references("id")
+    .inTable("equipments");
+  table
+    .foreign("project_id")
+    .references("id")
+    .inTable("projects");
+  table
+    .foreign("account_id")
+    .references("id")
+    .inTable("accounts");
 };
 
 const notificationSchemaDescription = table => {
-  table.increments("id");
+  table.increments("id").primary();
   table.boolean("read");
   table.date("date").defaultTo(conn.fn.now());
-  table.foreign("account_id").references("accounts.id");
-  table.foreign("slump_id").references("slumps.id");
+  table.integer("account_id").unsigned();
+  table.integer("slump_id").unsigned();
+  table
+    .foreign("account_id")
+    .references("id")
+    .inTable("equipments");
+  table
+    .foreign("slump_id")
+    .references("id")
+    .inTable("slumps");
 };
 
 const alarmSchemaDescription = table => {
-  table.increments("id");
+  table.increments("id").primary();
   table.string("origin").notNullable();
   table.string("company").notNullable();
   table.string("machine").notNullable();
@@ -87,7 +123,7 @@ const alarmSchemaDescription = table => {
 };
 
 const interventionSchemaDescription = table => {
-  table.increments("id");
+  table.increments("id").primary();
   table.float("duration").notNullable();
   table.string("comment").notNullable();
   table.string("solution").notNullable();
@@ -95,7 +131,11 @@ const interventionSchemaDescription = table => {
     .timestamp("timestamp")
     .defaultTo(conn.fn.now())
     .notNullable(); // TODO change to date
-  table.foreign("alarm_id").references("alarms.id");
+  table.integer("alarm_id").unsigned();
+  table
+    .foreign("alarm_id")
+    .references("id")
+    .inTable("alarms");
 };
 
 const machineSchema = conn.schema.createSchema(
@@ -135,150 +175,6 @@ const interventionSchema = conn.schema.createSchema(
   interventionSchemaDescription
 );
 
-const up = async (connection, Promise) => {
-  if (!connection) {
-    logger.error("You must supply a knex connection object.");
-  }
-  try {
-    if (!(await connection.schema.hasTable("machines"))) {
-      await connection.schema.createTable("machines", machineSchemaDescription);
-    }
-
-    if (!(await connection.schema.hasTable("roles"))) {
-      await connection.schema.createTable("roles", roleSchemaDescription);
-    }
-
-    if (!(await connection.schema.hasTable("accounts"))) {
-      await connection.schema.createTable("accounts", accountSchemaDescription);
-    }
-
-    if (!(await connection.schema.hasTable("alarmtypes"))) {
-      await connection.schema.createTable(
-        "alarmtypes",
-        alarmtypeSchemaDescription
-      );
-    }
-
-    if (!(await connection.schema.hasTable("failuretypes"))) {
-      await connection.schema.createTable(
-        "failuretypes",
-        failuretypeSchemaDescription
-      );
-    }
-
-    if (!(await connection.schema.hasTable("projects"))) {
-      await connection.schema.createTable("projects", projectSchemaDescription);
-    }
-
-    if (!(await connection.schema.hasTable("users"))) {
-      await connection.schema.createTable("users", userSchemaDescription);
-    }
-
-    if (!(await connection.schema.hasTable("equipments"))) {
-      await connection.schema.createTable(
-        "equipments",
-        equipmentSchemaDescription
-      );
-    }
-
-    if (!(await connection.schema.hasTable("slumps"))) {
-      await connection.schema.createTable("slumps", slumpSchemaDescription);
-    }
-
-    if (!(await connection.schema.hasTable("notifications"))) {
-      await connection.schema.createTable(
-        "notifications",
-        notificationSchemaDescription
-      );
-    }
-
-    if (!(await connection.schema.hasTable("alarms"))) {
-      await connection.schema.createTable("alarms", alarmSchemaDescription);
-    }
-
-    if (!(await connection.schema.hasTable("interventions"))) {
-      await connection.schema.createTable(
-        "interventions",
-        interventionSchemaDescription
-      );
-    }
-  } catch (e) {
-    logger.error(e);
-  }
-};
-
-const down = async (connection, Promise) => {
-  if (!connection || !("schema" in connection)) {
-    logger.error("You must supply a knex connection object.");
-  }
-  try {
-    if (await connection.schema.hasTable("machines")) {
-      await connection.schema.dropTable("machines", machineSchemaDescription);
-    }
-
-    if (await connection.schema.hasTable("roles")) {
-      await connection.schema.dropTable("roles", roleSchemaDescription);
-    }
-
-    if (await connection.schema.hasTable("accounts")) {
-      await connection.schema.dropTable("accounts", accountSchemaDescription);
-    }
-
-    if (await connection.schema.hasTable("alarmtypes")) {
-      await connection.schema.dropTable(
-        "alarmtypes",
-        alarmtypeSchemaDescription
-      );
-    }
-
-    if (await connection.schema.hasTable("failuretypes")) {
-      await connection.schema.dropTable(
-        "failuretypes",
-        failuretypeSchemaDescription
-      );
-    }
-
-    if (await connection.schema.hasTable("projects")) {
-      await connection.schema.dropTable("projects", projectSchemaDescription);
-    }
-
-    if (await connection.schema.hasTable("users")) {
-      await connection.schema.dropTable("users", userSchemaDescription);
-    }
-
-    if (await connection.schema.hasTable("equipments")) {
-      await connection.schema.dropTable(
-        "equipments",
-        equipmentSchemaDescription
-      );
-    }
-
-    if (await connection.schema.hasTable("slumps")) {
-      await connection.schema.dropTable("slumps", slumpSchemaDescription);
-    }
-
-    if (await connection.schema.hasTable("notifications")) {
-      await connection.schema.dropTable(
-        "notifications",
-        notificationSchemaDescription
-      );
-    }
-
-    if (await connection.schema.hasTable("alarms")) {
-      await connection.schema.dropTable("alarms", alarmSchemaDescription);
-    }
-
-    if (await connection.schema.hasTable("interventions")) {
-      await connection.schema.dropTable(
-        "interventions",
-        interventionSchemaDescription
-      );
-    }
-  } catch (e) {
-    logger.error(e);
-  }
-};
-
 module.exports = {
   machineSchema,
   roleSchema,
@@ -304,8 +200,5 @@ module.exports = {
   slumpSchemaDescription,
   notificationSchemaDescription,
   alarmSchemaDescription,
-  interventionSchemaDescription,
-
-  up,
-  down
+  interventionSchemaDescription
 };
