@@ -8,9 +8,9 @@
     "lint": "eslint src/ -c .eslintrc.json --ext js",
     "test": "echo \"Error: no test specified\" && exit 1",
     
-    "initdb": "./node_modules/.bin/knex init",
-    "migratedb": "knex migrate:latest",
-    "rollbackdb": "knex migrate:rollback"
+    "initdb": "npx knex init",
+    "migratedb": "npx knex migrate:latest",
+    "rollbackdb": "npx knex migrate:rollback"
   },
   "repository": {
     "type": "git",

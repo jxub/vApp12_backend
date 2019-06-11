@@ -86,3 +86,87 @@
 {"message":"created the database","level":"info"}
 {"message":"destroyed the database","level":"info"}
 {"level":"error"}
+{"message":"machines table created","level":"info"}
+{"message":"roles table created","level":"info"}
+{"message":"creating accounts table: Error: create table `accounts` (`id` integer not null primary key autoincrement, `user_name` varchar(255), `user_hash` varchar(255), `user_salt` varchar(255), foreign key(`role_id`) references `roles`(`id`)) - SQLITE_ERROR: unknown column \"role_id\" in foreign key definition","level":"error"}
+{"message":"alarmtypes table created","level":"info"}
+{"message":"failuretypes table created","level":"info"}
+{"message":"projects table created","level":"info"}
+{"message":"creating users table: Error: create table `users` (`id` integer not null primary key autoincrement, foreign key(`project_id`) references `projects`(`id`), foreign key(`account_id`) references `accounts`(`id`)) - SQLITE_ERROR: unknown column \"project_id\" in foreign key definition","level":"error"}
+{"message":"creating equipments table: Error: create table `equipments` (`id` integer not null primary key autoincrement, `name` varchar(255), foreign key(`project_id`) references `project`(`id`)) - SQLITE_ERROR: unknown column \"project_id\" in foreign key definition","level":"error"}
+{"message":"creating slumps table: Error: create table `slumps` (`id` integer not null primary key autoincrement, `value` integer, `date` date default CURRENT_TIMESTAMP, foreign key(`equipment_id`) references `equipments`(`id`), foreign key(`project_id`) references `projects`(`id`), foreign key(`account_id`) references `accounts`(`id`)) - SQLITE_ERROR: unknown column \"equipment_id\" in foreign key definition","level":"error"}
+{"message":"creating notifications table: Error: create table `notifications` (`id` integer not null primary key autoincrement, `read` boolean, `date` date default CURRENT_TIMESTAMP, foreign key(`account_id`) references `accounts`(`id`), foreign key(`slump_id`) references `slumps`(`id`)) - SQLITE_ERROR: unknown column \"account_id\" in foreign key definition","level":"error"}
+{"message":"alarms table created","level":"info"}
+{"message":"creating interventions table: Error: create table `interventions` (`id` integer not null primary key autoincrement, `duration` float not null, `comment` varchar(255) not null, `solution` varchar(255) not null, `timestamp` datetime not null default CURRENT_TIMESTAMP, foreign key(`alarm_id`) references `alarms`(`id`)) - SQLITE_ERROR: unknown column \"alarm_id\" in foreign key definition","level":"error"}
+{"message":"deleting interventions table: Error: drop table `interventions` - SQLITE_ERROR: no such table: interventions","level":"error"}
+{"message":"alarms table deleted","level":"info"}
+{"message":"deleting notifications table: Error: drop table `notifications` - SQLITE_ERROR: no such table: notifications","level":"error"}
+{"message":"deleting slumps table: Error: drop table `slumps` - SQLITE_ERROR: no such table: slumps","level":"error"}
+{"message":"deleting equipments table: Error: drop table `equipments` - SQLITE_ERROR: no such table: equipments","level":"error"}
+{"message":"deleting users table: Error: drop table `users` - SQLITE_ERROR: no such table: users","level":"error"}
+{"message":"projects table deleted","level":"info"}
+{"message":"failuretypes table deleted","level":"info"}
+{"message":"alarmtypes table deleted","level":"info"}
+{"message":"deleting accounts table: Error: drop table `accounts` - SQLITE_ERROR: no such table: accounts","level":"error"}
+{"message":"roles table deleted","level":"info"}
+{"message":"machines table deleted","level":"info"}
+{"message":"machines table created","level":"info"}
+{"message":"roles table created","level":"info"}
+{"message":"creating accounts table: Error: create table `accounts` (`id` integer not null primary key autoincrement, `user_name` varchar(255), `user_hash` varchar(255), `user_salt` varchar(255), foreign key(`role_id`) references `roles`(`id`)) - SQLITE_ERROR: unknown column \"role_id\" in foreign key definition","level":"error"}
+{"message":"alarmtypes table created","level":"info"}
+{"message":"failuretypes table created","level":"info"}
+{"message":"projects table created","level":"info"}
+{"message":"creating users table: Error: create table `users` (`id` integer not null primary key autoincrement, foreign key(`project_id`) references `projects`(`id`), foreign key(`account_id`) references `accounts`(`id`)) - SQLITE_ERROR: unknown column \"project_id\" in foreign key definition","level":"error"}
+{"message":"creating equipments table: Error: create table `equipments` (`id` integer not null primary key autoincrement, `name` varchar(255), foreign key(`project_id`) references `projects`(`id`)) - SQLITE_ERROR: unknown column \"project_id\" in foreign key definition","level":"error"}
+{"message":"creating slumps table: Error: create table `slumps` (`id` integer not null primary key autoincrement, `value` integer, `date` date default CURRENT_TIMESTAMP, foreign key(`equipment_id`) references `equipments`(`id`), foreign key(`project_id`) references `projects`(`id`), foreign key(`account_id`) references `accounts`(`id`)) - SQLITE_ERROR: unknown column \"equipment_id\" in foreign key definition","level":"error"}
+{"message":"creating notifications table: Error: create table `notifications` (`id` integer not null primary key autoincrement, `read` boolean, `date` date default CURRENT_TIMESTAMP, foreign key(`account_id`) references `equipments`(`id`), foreign key(`slump_id`) references `slumps`(`id`)) - SQLITE_ERROR: unknown column \"account_id\" in foreign key definition","level":"error"}
+{"message":"alarms table created","level":"info"}
+{"message":"creating interventions table: Error: create table `interventions` (`id` integer not null primary key autoincrement, `duration` float not null, `comment` varchar(255) not null, `solution` varchar(255) not null, `timestamp` datetime not null default CURRENT_TIMESTAMP, foreign key(`alarm_id`) references `alarms`(`id`)) - SQLITE_ERROR: unknown column \"alarm_id\" in foreign key definition","level":"error"}
+{"message":"deleting interventions table: Error: drop table `interventions` - SQLITE_ERROR: no such table: interventions","level":"error"}
+{"message":"alarms table deleted","level":"info"}
+{"message":"deleting notifications table: Error: drop table `notifications` - SQLITE_ERROR: no such table: notifications","level":"error"}
+{"message":"deleting slumps table: Error: drop table `slumps` - SQLITE_ERROR: no such table: slumps","level":"error"}
+{"message":"deleting equipments table: Error: drop table `equipments` - SQLITE_ERROR: no such table: equipments","level":"error"}
+{"message":"deleting users table: Error: drop table `users` - SQLITE_ERROR: no such table: users","level":"error"}
+{"message":"projects table deleted","level":"info"}
+{"message":"failuretypes table deleted","level":"info"}
+{"message":"alarmtypes table deleted","level":"info"}
+{"message":"deleting accounts table: Error: drop table `accounts` - SQLITE_ERROR: no such table: accounts","level":"error"}
+{"message":"roles table deleted","level":"info"}
+{"message":"machines table deleted","level":"info"}
+{"message":"machines table created","level":"info"}
+{"message":"roles table created","level":"info"}
+{"message":"accounts table created","level":"info"}
+{"message":"alarmtypes table created","level":"info"}
+{"message":"failuretypes table created","level":"info"}
+{"message":"projects table created","level":"info"}
+{"message":"creating users table: Error: create table `users` (`id` integer not null primary key autoincrement, `project_id` integer, foreign key(`project_id`) references `projects`(`id`), foreign key(`account_id`) references `accounts`(`id`)) - SQLITE_ERROR: unknown column \"account_id\" in foreign key definition","level":"error"}
+{"message":"equipments table created","level":"info"}
+{"message":"slumps table created","level":"info"}
+{"message":"notifications table created","level":"info"}
+{"message":"alarms table created","level":"info"}
+{"message":"interventions table created","level":"info"}
+{"message":"interventions table deleted","level":"info"}
+{"message":"alarms table deleted","level":"info"}
+{"message":"notifications table deleted","level":"info"}
+{"message":"slumps table deleted","level":"info"}
+{"message":"equipments table deleted","level":"info"}
+{"message":"deleting users table: Error: drop table `users` - SQLITE_ERROR: no such table: users","level":"error"}
+{"message":"projects table deleted","level":"info"}
+{"message":"failuretypes table deleted","level":"info"}
+{"message":"alarmtypes table deleted","level":"info"}
+{"message":"accounts table deleted","level":"info"}
+{"message":"roles table deleted","level":"info"}
+{"message":"machines table deleted","level":"info"}
+{"message":"machines table created","level":"info"}
+{"message":"roles table created","level":"info"}
+{"message":"accounts table created","level":"info"}
+{"message":"alarmtypes table created","level":"info"}
+{"message":"failuretypes table created","level":"info"}
+{"message":"projects table created","level":"info"}
+{"message":"users table created","level":"info"}
+{"message":"equipments table created","level":"info"}
+{"message":"slumps table created","level":"info"}
+{"message":"notifications table created","level":"info"}
+{"message":"alarms table created","level":"info"}
+{"message":"interventions table created","level":"info"}
