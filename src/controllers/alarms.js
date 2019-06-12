@@ -6,9 +6,10 @@
 const logger = require("../config/logger");
 const knex = require("../config/knex");
 const alarms = require("../dal/alarms");
+const Alarm = require("../models/Alarm");
 
 module.exports = {
-  get(req, res) {
+  get(req, res, next) {
     if (req.query.id) {
       // `getAlarm`
       // ejemplo:
@@ -17,15 +18,28 @@ module.exports = {
       // Devolver el resultado con express.
       // TODO
       knex
-        .select("id", "origin")
+        .select(
+          "id",
+          "timestamp",
+          "status",
+          "code",
+          "name",
+          "type",
+          "machine",
+          "company",
+          "origin",
+          "comment"
+        )
         .from("alarms")
+        .where("id", req.query.id)
         .then(vals => {
           const resp = [];
           for (let i = 0; i < vals.length; i += 1) {
-            resp[i] = vals[i];
+            const alarm = Alarm({});
+            resp[i] = Alarm({ name: "aa" });
           }
 
-          res.status(200).send(resp);
+          res.json(resp);
         })
         .catch(e => {
           logger.error(e);
@@ -38,25 +52,50 @@ module.exports = {
         .getById(req.query.id)
         .then(resp => {
           logger.debug(resp);
-          req.status(200).send(resp);
+          res.send(resp);
         })
         .catch(err => {
           logger.error(err);
-          req.status(500).end();
+          res.status(500).end();
         });
       */
     } else if (req.query.company) {
       // `getAlarmsByCompany``
-      alarms
+      knex
+        .select(
+          "id",
+          "timestamp",
+          "status",
+          "code",
+          "name",
+          "type",
+          "machine",
+          "company",
+          "origin",
+          "comment"
+        )
+        .from("alarms")
+        .where("company", req.query.company)
+        .limit(1)
+        .then(val => {
+          res.json(val);
+        })
+        .catch(e => {
+          logger.error(e);
+
+          res.status(500).end();
+        });
+      /* alarms
         .getByCompany(req.query.company)
         .then(resp => {
           logger.debug(resp);
-          req.status(200).send(resp);
+          res.send(resp);
         })
         .catch(err => {
           logger.error(err);
-          req.status(500).end();
+          res.status(500).end();
         });
+        */
     } else {
       // `getAlarms`
       // TODO: not implemented!
@@ -64,15 +103,15 @@ module.exports = {
         .getByUser(req.user.id)
         .then(resp => {
           logger.debug(resp);
-          req.status(200).send(resp);
+          res.send(resp);
         })
         .catch(err => {
           logger.error(err);
-          req.status(500).json({ message: err.message });
+          res.status(500).json({ message: err.message });
         });
     }
   },
-  create(req, res) {
+  create(req, res, next) {
     const { body } = req;
     if (
       "timestamp" in body &&
@@ -99,7 +138,7 @@ module.exports = {
         )
         .then(val => {
           logger.info(val.message);
-          res.status(200).send(val);
+          res.send(val);
         })
         .catch(err => {
           logger.error(err);
@@ -109,7 +148,7 @@ module.exports = {
       res.status(500).end();
     }
   },
-  update(req, res) {
+  update(req, res, next) {
     if (req.query.id) {
       // editAlarm or changeStatusAlarm
       const { body } = req;
@@ -151,7 +190,7 @@ module.exports = {
           )
           .then(val => {
             logger.info(val.message);
-            res.status(200).send(val);
+            res.send(val);
           })
           .catch(err => {
             logger.error(err);
@@ -166,17 +205,17 @@ module.exports = {
         .json({ message: "Request ID missing in the query string" });
     }
   },
-  delete(req, res) {
+  delete(req, res, next) {
     if (req.query.id) {
       alarms
         .delete(req.query.id)
         .then(resp => {
           logger.debug(resp);
-          req.status(200).send(resp);
+          res.send(resp);
         })
         .catch(err => {
           logger.error(err);
-          req.status(500).end();
+          res.status(500).end();
         });
     } else {
       res.status(422).json({

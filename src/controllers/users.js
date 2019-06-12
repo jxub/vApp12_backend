@@ -4,11 +4,11 @@
 const dal = require("../dal");
 
 module.exports = {
-  get(req, res) {
+  get(req, res, next) {
     if (req.query.projectid) {
       dal.users.getByProject(req.query.projectid, function(err, response) {
         if (!err) {
-          res.status(200).json(response);
+          res.json(response);
         } else {
           res.status(500).end();
         }
@@ -19,7 +19,7 @@ module.exports = {
         response
       ) {
         if (!err) {
-          res.status(200).json(response);
+          res.json(response);
         } else {
           res.status(500).end();
         }
@@ -28,7 +28,7 @@ module.exports = {
       res.status(501).end();
     }
   },
-  create(req, res) {
+  create(req, res, next) {
     if (req.body.accountid && req.body.projectid) {
       dal.users.create(req.body.accountid, req.body.projectid, function(
         err,
@@ -44,18 +44,18 @@ module.exports = {
       res.status(422).json({ message: "Missing required parameters" });
     }
   },
-  update(req, res) {
+  update(req, res, next) {
     if (req) {
       res.status(501).json({ message: "Not implemented" });
     } else {
       res.status(422).json({ message: "Missing required fields" });
     }
   },
-  delete(req, res) {
+  delete(req, res, next) {
     if (req.query.id) {
       dal.users.deleteById(req.query.id, function(err, answer) {
         if (!err) {
-          res.status(200).send(answer);
+          res.send(answer);
         } else {
           res.status(500).end();
         }

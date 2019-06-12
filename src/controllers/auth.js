@@ -2,7 +2,7 @@ const passport = require("passport");
 const dal = require("../dal");
 
 module.exports = {
-  register(req, res) {
+  register(req, res, next) {
     if (req.body.username && req.body.password) {
       dal.accounts.create(req.body.username, req.body.password, function(
         e,
@@ -33,7 +33,7 @@ module.exports = {
         console.log("Creating jw token...");
         console.log("out user: ");
         console.log(user);
-        res.status(200).send({ token: dal.accounts.generateJwt(user) });
+        res.send({ token: dal.accounts.generateJwt(user) });
       } else {
         // If user is not found
         res.status(401).json(info);

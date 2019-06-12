@@ -3,7 +3,7 @@ const ctl = require("./controllers");
 
 const router = express.Router();
 
-router.route("/test").get((req, res) => {
+router.route("/test").get((req, res, next) => {
   res.json({ hello: "world" });
 });
 

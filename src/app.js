@@ -54,7 +54,7 @@ app.use(
 );
 
 // Serve Angular app - let the Angular decide every what to do with every route by using '*'
-app.get("*", function(req, res) {
+app.get("*", function(req, res, next) {
   res.sendFile("index.html", {
     root: path.join(path.normalize(__dirname), "../../views/app24/dist/app24")
   });

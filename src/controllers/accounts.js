@@ -4,11 +4,11 @@
 const dal = require("../dal");
 
 module.exports = {
-  get(req, res) {
+  get(req, res, next) {
     if (req.query.filterid) {
       dal.accounts.getFiltered(req.query.filterid, function(err, answer) {
         if (!err) {
-          res.status(200).send(answer);
+          res.send(answer);
         } else {
           res.status(500).end();
         }
@@ -19,7 +19,7 @@ module.exports = {
     }
   },
 
-  create(req, res) {},
-  update(req, res) {},
-  delete(req, res) {}
+  create(req, res, next) {},
+  update(req, res, next) {},
+  delete(req, res, next) {}
 };

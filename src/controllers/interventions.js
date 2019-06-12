@@ -2,14 +2,14 @@ const interventions = require("../dal/interventions");
 const logger = require("../config/logger");
 
 module.exports = {
-  get(req, res) {
+  get(req, res, next) {
     if ("company" in req.query) {
       // getInterventionsbyCompany
       interventions
         .get({ company: req.query.company })
         .then(val => {
           logger.debug(val);
-          res.status(200).send(val);
+          res.send(val);
         })
         .catch(err => {
           logger.error(err);
@@ -21,7 +21,7 @@ module.exports = {
         .get({ alarmID: req.query.alarmid })
         .then(val => {
           logger.debug(val);
-          res.status(200).send(val);
+          res.send(val);
         })
         .catch(err => {
           logger.error(err);
@@ -32,7 +32,7 @@ module.exports = {
         .get({ ID: req.query.id })
         .then(val => {
           logger.debug(val);
-          res.status(200).send(val);
+          res.send(val);
         })
         .catch(err => {
           logger.error(err);
@@ -43,7 +43,7 @@ module.exports = {
         .get({})
         .then(val => {
           logger.debug(val);
-          res.status(200).send(val);
+          res.send(val);
         })
         .catch(err => {
           logger.error(err);
@@ -51,7 +51,7 @@ module.exports = {
         });
     }
   },
-  create(req, res) {
+  create(req, res, next) {
     const { body } = req;
     if (
       "solution" in body &&
@@ -71,7 +71,7 @@ module.exports = {
         })
         .then(val => {
           logger.debug(val);
-          res.status(200).send(val);
+          res.send(val);
         })
         .catch(err => {
           logger.error(err);
@@ -81,7 +81,7 @@ module.exports = {
       res.status(422).json({ message: "Missing required fields" });
     }
   },
-  update(req, res) {
+  update(req, res, next) {
     const { body } = req;
     if (
       "solution" in body &&
@@ -101,7 +101,7 @@ module.exports = {
         })
         .then(val => {
           logger.debug(val);
-          res.status(200).send(val);
+          res.send(val);
         })
         .catch(err => {
           logger.error(err);
@@ -111,13 +111,13 @@ module.exports = {
       res.status(422).json({ message: "Missing required fields" });
     }
   },
-  delete(req, res) {
+  delete(req, res, next) {
     if (req.query.id) {
       interventions
         .delete({ ID: req.query.id })
         .then(val => {
           logger.debug(val);
-          res.status(200).send(val);
+          res.send(val);
         })
         .catch(err => {
           logger.error(err);
