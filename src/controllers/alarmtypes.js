@@ -1,14 +1,14 @@
-const alarmtypes = require("../dal/alarmtypes");
+/* eslint-disable no-unused-vars */
+const conn = require("../config/conn");
 const logger = require("../config/logger");
 
 module.exports = {
-  // eslint-disable-next-line no-unused-vars
   get(req, res, next) {
-    alarmtypes
-      .get({ code: req.query.code })
-      .then(resp => {
-        logger.debug(resp);
-        res.send(resp);
+    conn
+      .select("code", "name")
+      .from("alarmtypes")
+      .then(rows => {
+        res.json(rows);
       })
       .catch(err => {
         logger.error(err);
@@ -17,16 +17,16 @@ module.exports = {
   },
   create(req, res, next) {
     if ("code" in req.body && "name" in req.body) {
-      alarmtypes
-        .create({ code: req.body.code, name: req.body.name })
-        .then(resp => {
-          logger.debug(resp);
-          res.send(resp);
+      conn
+        .insert({ code: req.body.code, name: req.body.name })
+        .then(ids => {
+          res.status(201).json({ message: `created ${ids}` });
         })
         .catch(err => {
-          logger.error(err);
           res.status(500).end();
         });
+    } else {
+      res.status(400).end();
     }
   },
   update(req, res, next) {

@@ -1,6 +1,7 @@
 const failuretypes = require("../dal/failuretypes");
 const logger = require("../config/logger");
-
+// from id, name, code return only id and name
+// to the caller
 module.exports = {
   get(req, res, next) {
     failuretypes
