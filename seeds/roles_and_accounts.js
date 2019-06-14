@@ -8,7 +8,7 @@ const createFakeRole = () => ({
 const createFakeAccount = () => ({
   user_name: faker.name.findName(),
   user_hash: faker.random.alphaNumeric(),
-  user_salt: faker.random.number()  ,
+  user_salt: faker.random.number(),
   role_id: null
 });
 
