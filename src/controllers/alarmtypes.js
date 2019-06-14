@@ -4,6 +4,7 @@ const logger = require("../config/logger");
 
 module.exports = {
   get(req, res, next) {
+    // getAlarmTypes
     conn
       .select("code", "name")
       .from("alarmtypes")
@@ -17,6 +18,7 @@ module.exports = {
   },
   create(req, res, next) {
     if ("code" in req.body && "name" in req.body) {
+      // createAlarmType
       conn
         .insert({ code: req.body.code, name: req.body.name })
         .then(ids => {
@@ -30,40 +32,37 @@ module.exports = {
     }
   },
   update(req, res, next) {
-    // TODO: not really needed, remove
-    if (req.query.code) {
-      if ("name" in req.body) {
-        alarmtypes
-          .update({ code: req.query.code, name: req.body.name })
-          .then(resp => {
-            logger.debug(resp);
-            res.send(resp);
-          })
-          .catch(err => {
-            logger.error(err);
-            res.status(500).end();
-          });
-      } else {
-        res.status(400).end();
-      }
+    if ("code" in req.query && "name" in req.body) {
+      // editAlarmType
+      conn("alarmtypes")
+        .where("code", req.query.code)
+        .update({ name: req.body.name }, ["code", "name"])
+        .then(rows => {
+          res.status(200).json({ message: `updated ${rows}` });
+        })
+        .catch(err => {
+          logger.error(err);
+          res.status(500).json({ message: `${err}` });
+        });
     } else {
       res.status(400).end();
     }
   },
   delete(req, res, next) {
+    // deleteAlarmType
     if ("code" in req.query) {
-      alarmtypes
-        .delete({ code: req.query.code })
-        .then(resp => {
-          logger.debug(resp);
-          res.send(resp);
+      conn("alarmtypes")
+        .where("code", req.query.code)
+        .del()
+        .then(deleted => {
+          res.status(200).json({ message: `deleted: ${deleted} row/s` });
         })
         .catch(err => {
           logger.error(err);
-          res.status(500).end();
+          res.status(500).json({ message: `${err}` });
         });
     } else {
-      res.status(422).json({ message: "Missing required fields" });
+      res.status(400).end();
     }
   }
 };
