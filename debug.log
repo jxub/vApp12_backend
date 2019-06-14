@@ -196,3 +196,14 @@
 {"message":"interventions table created","level":"info"}
 {"message":"interventions_alarms view created","level":"info"}
 {"message":"user_accounts view created","level":"info"}
+{"message":"machines table created","level":"info"}
+{"message":"roles table created","level":"info"}
+{"message":"accounts table created","level":"info"}
+{"message":"alarmtypes table created","level":"info"}
+{"message":"failuretypes table created","level":"info"}
+{"message":"users table created","level":"info"}
+{"message":"alarms table created","level":"info"}
+{"message":"interventions table created","level":"info"}
+{"message":"user_projects view created","level":"info"}
+{"message":"interventions_alarms view created","level":"info"}
+{"message":"user_accounts view created","level":"info"}

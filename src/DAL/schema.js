@@ -40,14 +40,6 @@ const failuretypeSchemaDescription = table => {
   table.string("code");
 };
 
-const projectSchemaDescription = table => {
-  table.increments("id").primary();
-  table.string("name").notNullable();
-  table.string("description").notNullable();
-  table.boolean("status").notNullable();
-  table.integer("threshold").notNullable();
-};
-
 const userSchemaDescription = table => {
   table.increments("id").primary();
   table.integer("project_id").unsigned();
@@ -60,53 +52,6 @@ const userSchemaDescription = table => {
     .foreign("account_id")
     .references("id")
     .inTable("accounts");
-};
-
-const equipmentSchemaDescription = table => {
-  table.increments("id").primary();
-  table.string("name");
-  table.integer("project_id").unsigned();
-  table
-    .foreign("project_id")
-    .references("id")
-    .inTable("projects");
-};
-
-const slumpSchemaDescription = table => {
-  table.increments("id").primary();
-  table.integer("value");
-  table.date("date").defaultTo(conn.fn.now());
-  table.integer("equipment_id").unsigned();
-  table.integer("project_id").unsigned();
-  table.integer("account_id").unsigned();
-  table
-    .foreign("equipment_id")
-    .references("id")
-    .inTable("equipments");
-  table
-    .foreign("project_id")
-    .references("id")
-    .inTable("projects");
-  table
-    .foreign("account_id")
-    .references("id")
-    .inTable("accounts");
-};
-
-const notificationSchemaDescription = table => {
-  table.increments("id").primary();
-  table.boolean("read");
-  table.date("date").defaultTo(conn.fn.now());
-  table.integer("account_id").unsigned();
-  table.integer("slump_id").unsigned();
-  table
-    .foreign("account_id")
-    .references("id")
-    .inTable("equipments");
-  table
-    .foreign("slump_id")
-    .references("id")
-    .inTable("slumps");
 };
 
 const alarmSchemaDescription = table => {
@@ -154,20 +99,7 @@ const failuretypeSchema = conn.schema.createSchema(
   "failuretypes",
   failuretypeSchemaDescription
 );
-const projectSchema = conn.schema.createSchema(
-  "projects",
-  projectSchemaDescription
-);
 const userSchema = conn.schema.createSchema("users", userSchemaDescription);
-const equipmentSchema = conn.schema.createSchema(
-  "equipments",
-  equipmentSchemaDescription
-);
-const slumpSchema = conn.schema.createSchema("slumps", slumpSchemaDescription);
-const notificationSchema = conn.schema.createSchema(
-  "notifications",
-  notificationSchemaDescription
-);
 const alarmSchema = conn.schema.createSchema("alarms", alarmSchemaDescription);
 const interventionSchema = conn.schema.createSchema(
   "interventions",
@@ -180,11 +112,7 @@ module.exports = {
   accountSchema,
   alarmtypeSchema,
   failuretypeSchema,
-  projectSchema,
   userSchema,
-  equipmentSchema,
-  slumpSchema,
-  notificationSchema,
   alarmSchema,
   interventionSchema,
 
@@ -193,11 +121,7 @@ module.exports = {
   accountSchemaDescription,
   alarmtypeSchemaDescription,
   failuretypeSchemaDescription,
-  projectSchemaDescription,
   userSchemaDescription,
-  equipmentSchemaDescription,
-  slumpSchemaDescription,
-  notificationSchemaDescription,
   alarmSchemaDescription,
   interventionSchemaDescription
 };

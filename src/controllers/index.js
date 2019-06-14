@@ -1,7 +1,6 @@
 /* eslint-disable global-require */
 
 module.exports = {
-  accounts: require("./accounts"),
   alarms: require("./alarms"),
   alarmtypes: require("./alarmtypes"),
   auth: require("./auth"),
