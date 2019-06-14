@@ -1,4 +1,4 @@
-const conn = require("../config/knex");
+const conn = require("../config/conn");
 const logger = require("../config/logger");
 
 // TODO remove

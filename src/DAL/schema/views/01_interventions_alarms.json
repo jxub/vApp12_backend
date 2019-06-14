@@ -1,4 +1,0 @@
-{
-  "view_definition_query":"select * from failuremanager.interventions as itv inner join failuremanager.alarms as alm on itv.idAlarm = alm.id",
-  "view_name":"interventions_alarms"
-}

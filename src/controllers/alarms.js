@@ -4,7 +4,7 @@
 /* eslint-disable no-underscore-dangle */
 
 const logger = require("../config/logger");
-const knex = require("../config/knex");
+const conn = require("../config/conn");
 const alarms = require("../dal/alarms");
 const Alarm = require("../models/Alarm");
 
@@ -17,7 +17,7 @@ module.exports = {
       // construir y ejecutar las queries.
       // Devolver el resultado con express.
       // TODO
-      knex
+      conn
         .select(
           "id",
           "timestamp",
@@ -61,7 +61,7 @@ module.exports = {
       */
     } else if (req.query.company) {
       // `getAlarmsByCompany``
-      knex
+      conn
         .select(
           "id",
           "timestamp",

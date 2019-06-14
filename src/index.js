@@ -44,7 +44,7 @@ app.set("port", port);
 
 
 const schema = require("./dal/schema");
-const conn = require("./config/knex");
+const conn = require("./config/conn");
 
 schema
   .up(conn, logger)

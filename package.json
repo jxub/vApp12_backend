@@ -7,7 +7,6 @@
     "start": "node src/index.js",
     "lint": "eslint src/ -c .eslintrc.json --ext js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    
     "initdb": "npx knex init",
     "migratedb": "npx knex migrate:latest",
     "rollbackdb": "npx knex migrate:rollback"
@@ -34,6 +33,7 @@
     "express": "^4.17.1",
     "express-jwt": "^5.3.1",
     "express-validator": "^5.3.1",
+    "faker": "^4.1.0",
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.17.5",
     "morgan": "^1.9.1",
