@@ -1,5 +1,4 @@
 const conn = require("../config/conn");
-const logger = require("../config/logger");
 
 // TODO remove
 if (!conn.fn.now()) {

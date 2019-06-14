@@ -4,3 +4,5 @@ node_modules/
 models/
 service.ts
 package-lock.json
+*.log
+*.sqlite
