@@ -4,6 +4,7 @@ const createFakeMachine = () => ({
   name: faker.random.word()
 });
 
+// eslint-disable-next-line no-unused-vars
 exports.seed = (knex, Promise) => {
   // Deletes ALL existing entries
   return knex("machines")
