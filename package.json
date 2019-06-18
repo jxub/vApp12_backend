@@ -46,6 +46,7 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/ramda": "^0.26.9",
     "eslint": "^5.3.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.3.0",

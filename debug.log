@@ -207,3 +207,85 @@
 {"message":"user_projects view created","level":"info"}
 {"message":"interventions_alarms view created","level":"info"}
 {"message":"user_accounts view created","level":"info"}
+{"message":"user_accounts view deleted","level":"info"}
+{"message":"interventions_alarms view deleted","level":"info"}
+{"message":"user_projects view deleted","level":"info"}
+{"message":"interventions table deleted","level":"info"}
+{"message":"alarms table deleted","level":"info"}
+{"message":"users table deleted","level":"info"}
+{"message":"failuretypes table deleted","level":"info"}
+{"message":"alarmtypes table deleted","level":"info"}
+{"message":"accounts table deleted","level":"info"}
+{"message":"roles table deleted","level":"info"}
+{"message":"machines table deleted","level":"info"}
+{"message":"machines table created","level":"info"}
+{"message":"roles table created","level":"info"}
+{"message":"accounts table created","level":"info"}
+{"message":"alarmtypes table created","level":"info"}
+{"message":"failuretypes table created","level":"info"}
+{"message":"users table created","level":"info"}
+{"message":"alarms table created","level":"info"}
+{"message":"interventions table created","level":"info"}
+{"message":"user_projects view created","level":"info"}
+{"message":"interventions_alarms view created","level":"info"}
+{"message":"user_accounts view created","level":"info"}
+{"message":"creating machines table: Error: create table `machines` (`id` integer not null primary key autoincrement, `name` varchar(255)) - SQLITE_ERROR: table `machines` already exists","level":"error"}
+{"message":"creating roles table: Error: create table `roles` (`id` integer not null primary key autoincrement, `description` varchar(255), `account_type` varchar(255)) - SQLITE_ERROR: table `roles` already exists","level":"error"}
+{"message":"creating accounts table: Error: create table `accounts` (`id` integer not null primary key autoincrement, `user_name` varchar(255), `user_hash` varchar(255), `user_salt` varchar(255), `role_id` integer, foreign key(`role_id`) references `roles`(`id`)) - SQLITE_ERROR: table `accounts` already exists","level":"error"}
+{"message":"creating alarmtypes table: Error: create table `alarmtypes` (`id` integer not null primary key autoincrement, `name` varchar(255), `code` varchar(255)) - SQLITE_ERROR: table `alarmtypes` already exists","level":"error"}
+{"message":"creating failuretypes table: Error: create table `failuretypes` (`id` integer not null primary key autoincrement, `name` varchar(255), `code` varchar(255)) - SQLITE_ERROR: table `failuretypes` already exists","level":"error"}
+{"message":"creating users table: Error: create table `users` (`id` integer not null primary key autoincrement, `mail` varchar(255), `company` varchar(255), `account_id` integer, foreign key(`account_id`) references `accounts`(`id`)) - SQLITE_ERROR: table `users` already exists","level":"error"}
+{"message":"creating alarms table: Error: create table `alarms` (`id` integer not null primary key autoincrement, `origin` varchar(255) not null, `company` varchar(255) not null, `machine` varchar(255) not null, `type` varchar(255) not null, `name` varchar(255) not null, `detected` varchar(255) not null, `timestamp` datetime default CURRENT_TIMESTAMP) - SQLITE_ERROR: table `alarms` already exists","level":"error"}
+{"message":"creating interventions table: Error: create table `interventions` (`id` integer not null primary key autoincrement, `duration` float not null, `comment` varchar(255) not null, `solution` varchar(255) not null, `timestamp` datetime not null default CURRENT_TIMESTAMP, `alarm_id` integer, foreign key(`alarm_id`) references `alarms`(`id`)) - SQLITE_ERROR: table `interventions` already exists","level":"error"}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"errno":1,"code":"SQLITE_ERROR","level":"error"}
+{"message":"machines table created","level":"info"}
+{"message":"roles table created","level":"info"}
+{"message":"accounts table created","level":"info"}
+{"message":"alarmtypes table created","level":"info"}
+{"message":"failuretypes table created","level":"info"}
+{"message":"users table created","level":"info"}
+{"message":"alarms table created","level":"info"}
+{"message":"interventions table created","level":"info"}
+{"message":"interventions_alarms view created","level":"info"}
+{"message":"user_accounts view created","level":"info"}
+{"message":"user_accounts view deleted","level":"info"}
+{"message":"interventions_alarms view deleted","level":"info"}
+{"message":"interventions table deleted","level":"info"}
+{"message":"alarms table deleted","level":"info"}
+{"message":"users table deleted","level":"info"}
+{"message":"failuretypes table deleted","level":"info"}
+{"message":"alarmtypes table deleted","level":"info"}
+{"message":"accounts table deleted","level":"info"}
+{"message":"roles table deleted","level":"info"}
+{"message":"machines table deleted","level":"info"}
+{"message":"machines table created","level":"info"}
+{"message":"roles table created","level":"info"}
+{"message":"accounts table created","level":"info"}
+{"message":"alarmtypes table created","level":"info"}
+{"message":"failuretypes table created","level":"info"}
+{"message":"users table created","level":"info"}
+{"message":"alarms table created","level":"info"}
+{"message":"interventions table created","level":"info"}
+{"message":"interventions_alarms view created","level":"info"}
+{"message":"user_accounts view created","level":"info"}
+{"message":"machines table created","level":"info"}
+{"message":"roles table created","level":"info"}
+{"message":"accounts table created","level":"info"}
+{"message":"alarmtypes table created","level":"info"}
+{"message":"failuretypes table created","level":"info"}
+{"message":"users table created","level":"info"}
+{"message":"alarms table created","level":"info"}
+{"message":"interventions table created","level":"info"}
+{"message":"interventions_alarms view created","level":"info"}
+{"message":"user_accounts view created","level":"info"}
+{"message":"machines table created","level":"info"}
+{"message":"roles table created","level":"info"}
+{"message":"accounts table created","level":"info"}
+{"message":"alarmtypes table created","level":"info"}
+{"message":"failuretypes table created","level":"info"}
+{"message":"users table created","level":"info"}
+{"message":"alarms table created","level":"info"}
+{"message":"interventions table created","level":"info"}
+{"message":"interventions_alarms view created","level":"info"}
+{"message":"user_accounts view created","level":"info"}

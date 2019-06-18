@@ -6,7 +6,8 @@ exports.up = (knex, Promise) => {
   return knex
     .raw(
       `
-    CREATE VIEW interventions_alarms
+    DROP VIEW IF EXISTS interventions_alarms;
+    CREATE OR REPLACE VIEW interventions_alarms
     AS
       SELECT *
       FROM interventions as I

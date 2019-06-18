@@ -6,9 +6,10 @@ exports.up = (knex, Promise) => {
   return knex
     .raw(
       `
-    CREATE VIEW user_accounts
+    DROP VIEW IF EXISTS user_accounts;
+    CREATE OR REPLACE VIEW user_accounts
     AS
-      SELECT U.id, U.project_id, A.user_name, A.id, A.role_id, R.account_type
+      SELECT U.id, A.user_name, A.id, A.role_id, R.account_type
       FROM users as U
         LEFT JOIN accounts as A
         ON A.id = U.account_id

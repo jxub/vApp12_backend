@@ -42,12 +42,9 @@ const failuretypeSchemaDescription = table => {
 
 const userSchemaDescription = table => {
   table.increments("id").primary();
-  table.integer("project_id").unsigned();
+  table.string("mail").unique();
+  table.string("company");
   table.integer("account_id").unsigned();
-  table
-    .foreign("project_id")
-    .references("id")
-    .inTable("projects");
   table
     .foreign("account_id")
     .references("id")
@@ -61,6 +58,7 @@ const alarmSchemaDescription = table => {
   table.string("machine").notNullable();
   table.string("type").notNullable();
   table.string("name").notNullable();
+  // Could detected pbe string as well?
   table.string("detected").notNullable();
   // TODO change to date
   table.timestamp("timestamp").defaultTo(conn.fn.now());
