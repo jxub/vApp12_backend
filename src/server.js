@@ -54,7 +54,7 @@ app.use(
 );
 
 // Serve Angular app - let the Angular decide every what to do with every route by using '*'
-app.get("*", function(req, res, next) {
+app.get("*", (req, res, next) => {
   res.sendFile("index.html", {
     root: path.join(path.normalize(__dirname), "../../views/app24/dist/app24")
   });
@@ -62,7 +62,7 @@ app.get("*", function(req, res, next) {
 
 // Catch unauthorised errors
 // eslint-disable-next-line no-unused-vars
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
     res.status(401);
     res.json({ message: `${err.name}: ${err.message}` });
@@ -86,5 +86,8 @@ app.use(function(err, req, res, next) {
 //   res.status(err.status || 500);
 //   res.render('error');
 // });
+
+const port = process.env.API_PORT || "4200";
+app.listen(port, () => logger.info("API running at ", port));
 
 module.exports = app;

@@ -1,8 +1,14 @@
 const faker = require("faker");
 
+// eslint-disable-next-line no-unused-vars
 const createFakeRole = () => ({
   description: faker.random.word(),
   account_type: faker.random.word()
+});
+
+const createDefaultRole = i => ({
+  description: `default-${i}`,
+  account_type: "default"
 });
 
 const createFakeAccount = roleId => ({
@@ -33,7 +39,8 @@ exports.seed = (knex, Promise) => {
     .then(() => {
       const roles = [];
       for (let i = 0; i < ITERS; i += 1) {
-        roles.push(createFakeRole());
+        // roles.push(createFakeRole());
+        roles.push(createDefaultRole(i));
       }
 
       return knex("roles").insert(roles);

@@ -1,8 +1,8 @@
 const passport = require("passport");
-const dal = require("../dal");
+const conn = require("./../config/conn");
 
 module.exports = {
-  register(req, res, next) {
+  registerV1(req, res, next) {
     if (req.body.username && req.body.password) {
       dal.accounts.create(req.body.username, req.body.password, function(
         e,
@@ -18,7 +18,7 @@ module.exports = {
       res.status(422).json({ message: "Missing required fields" });
     }
   },
-  login(req, res, next) {
+  loginV1(req, res, next) {
     passport.authenticate("local", function(err, user, info) {
       // let token;
       console.log("passport authentication");
@@ -39,5 +39,43 @@ module.exports = {
         res.status(401).json(info);
       }
     })(req, res, next);
+  },
+  register(req, res, next) {
+    if ("username" in req.body && "password" in req.body) {
+      if (!userExists({ user: req.body.username, pass: req.body.password })) {
+        const role = {description: "de"};
+        const account = {};
+        const user = {};
+        conn("roles").insert(role);
+        conn("accounts").insert(account);
+        conn("user").insert(user);
+
+      } else {
+      }
+    }
+
+    User.findOne({emailAddress: req.body.emailAddress})
+         .then(user => {
+             if(user){
+                let error = 'Email Address Exists in Database.';
+                return res.status(400).json(error);
+             } else {
+                const newUser = new User({
+                      name: req.body.name,
+                      emailAddress: req.body.emailAddress,
+                      password: req.body.password
+                 });
+                 bcrypt.genSalt(10, (err, salt) => {
+                    if(err) throw err;
+                    bcrypt.hash(newUser.password, salt,
+                                        (err, hash) => {
+                        if(err) throw err;
+                        newUser.password = hash;
+                        newUser.save().then(user => res.json(user))
+                           .catch(err => res.status(400).json(err));
+                   });
+               });
+          }
+     });
   }
 };
