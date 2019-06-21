@@ -5,8 +5,6 @@
 
 const logger = require("../config/logger");
 const conn = require("../config/conn");
-const alarms = require("../dal/alarms");
-const Alarm = require("../models/Alarm");
 
 module.exports = {
   get(req, res, next) {
@@ -35,30 +33,28 @@ module.exports = {
         .then(vals => {
           const resp = [];
           for (let i = 0; i < vals.length; i += 1) {
-            const alarm = Alarm({});
-            resp[i] = Alarm({ name: "aa" });
+            const a0 = vals[i];
+            const alarm = {
+              id: a0.id,
+              timestamp: a0.timestamp,
+              status: a0.status,
+              code: a0.code,
+              name: a0.name,
+              type: a0.type,
+              machine: a0.machine,
+              company: a0.company,
+              origin: a0.origin,
+              comment: a0.comment
+            };
+            resp[i] = alarm;
           }
 
           res.json(resp);
         })
         .catch(e => {
-          logger.error(e);
-
+          logger.error(e.message);
           res.status(500).end();
         });
-
-      /*
-      alarms
-        .getById(req.query.id)
-        .then(resp => {
-          logger.debug(resp);
-          res.send(resp);
-        })
-        .catch(err => {
-          logger.error(err);
-          res.status(500).end();
-        });
-      */
     } else if (req.query.company) {
       // `getAlarmsByCompany``
       conn
@@ -76,38 +72,67 @@ module.exports = {
         )
         .from("alarms")
         .where("company", req.query.company)
-        .limit(1)
-        .then(val => {
-          res.json(val);
+        .then(vals => {
+          const resp = [];
+          for (let i = 0; i < vals.length; i += 1) {
+            const a0 = vals[i];
+            const alarm = {
+              id: a0.id,
+              timestamp: a0.timestamp,
+              status: a0.status,
+              code: a0.code,
+              name: a0.name,
+              type: a0.type,
+              machine: a0.machine,
+              company: a0.company,
+              origin: a0.origin,
+              comment: a0.comment
+            };
+            resp[i] = alarm;
+          }
         })
         .catch(e => {
-          logger.error(e);
-
+          logger.error(e.message);
           res.status(500).end();
         });
-      /* alarms
-        .getByCompany(req.query.company)
-        .then(resp => {
-          logger.debug(resp);
-          res.send(resp);
-        })
-        .catch(err => {
-          logger.error(err);
-          res.status(500).end();
-        });
-        */
     } else {
       // `getAlarms`
-      // TODO: not implemented!
-      alarms
-        .getByUser(req.user.id)
-        .then(resp => {
-          logger.debug(resp);
-          res.send(resp);
+      conn
+        .select(
+          "id",
+          "timestamp",
+          "status",
+          "code",
+          "name",
+          "type",
+          "machine",
+          "company",
+          "origin",
+          "comment"
+        )
+        .from("alarms")
+        .then(vals => {
+          const resp = [];
+          for (let i = 0; i < vals.length; i += 1) {
+            const a0 = vals[i];
+            const alarm = {
+              id: a0.id,
+              timestamp: a0.timestamp,
+              status: a0.status,
+              code: a0.code,
+              name: a0.name,
+              type: a0.type,
+              machine: a0.machine,
+              company: a0.company,
+              origin: a0.origin,
+              comment: a0.comment
+            };
+            resp[i] = alarm;
+          }
         })
-        .catch(err => {
-          logger.error(err);
-          res.status(500).json({ message: err.message });
+        .catch(e => {
+          logger.error(e.message);
+          res.status(500).end();
         });
     }
   },
@@ -124,44 +149,45 @@ module.exports = {
       "origin" in body &&
       "comment" in body
     ) {
-      alarms
-        .create(
-          body.timestamp,
-          body.status,
-          body.code,
-          body.name,
-          body.type,
-          body.machine,
-          body.company,
-          body.origin,
-          body.comment
-        )
-        .then(val => {
-          logger.info(val.message);
-          res.send(val);
-        })
-        .catch(err => {
-          logger.error(err);
-          res.status(500).end();
-        });
-    } else {
-      res.status(500).end();
+      const alarm = {
+        timestamp: body.timestamp,
+        status: body.status,
+        code: body.code,
+        name: body.name,
+        type: body.type,
+        machine: body.machine,
+        company: body.company,
+        origin: body.origin,
+        comment: body.comment
+      };
+      conn("alarms").insert(alarm);
     }
   },
   update(req, res, next) {
     if (req.query.id) {
       // editAlarm or changeStatusAlarm
       const { body } = req;
-      if ("status" in body && !("name" in body)) {
+      if (
+        "status" in body &&
+        !("timestamp" in body) &&
+        !("code" in body) &&
+        !("name" in body) &&
+        !("type" in body) &&
+        !("machine" in body) &&
+        !("company" in body) &&
+        !("origin" in body) &&
+        !("comment" in body)
+      ) {
         // changeStatusAlarm
-        alarms
-          .updateStatus(req.query.id, body.status)
+        conn("alarms")
+          .where("id", req.query.id)
+          .update("status", body.status)
           .then(val => {
-            logger.info(val.message);
+            logger.info(val);
             res.status(201).send(val);
           })
           .catch(err => {
-            logger.error(err);
+            logger.error(err.message);
             res.status(500).end();
           });
       } else if (
@@ -176,24 +202,25 @@ module.exports = {
         "comment" in body
       ) {
         // editAlarm
-        alarms
-          .update(
-            body.timestamp,
-            body.status,
-            body.code,
-            body.name,
-            body.type,
-            body.machine,
-            body.company,
-            body.origin,
-            body.comment
-          )
+        conn("alarms")
+          .where("id", req.query.id)
+          .update({
+            timestamp: body.timestamp,
+            status: body.status,
+            code: body.code,
+            name: body.name,
+            type: body.type,
+            machine: body.machine,
+            company: body.company,
+            origin: body.origin,
+            comment: body.comment
+          })
           .then(val => {
-            logger.info(val.message);
-            res.send(val);
+            logger.info(val);
+            res.status(201).send(val);
           })
           .catch(err => {
-            logger.error(err);
+            logger.error(err.message);
             res.status(500).end();
           });
       } else {
@@ -207,14 +234,15 @@ module.exports = {
   },
   delete(req, res, next) {
     if (req.query.id) {
-      alarms
-        .delete(req.query.id)
-        .then(resp => {
-          logger.debug(resp);
-          res.send(resp);
+      conn("alarms")
+        .where("id", req.query.id)
+        .del()
+        .then(val => {
+          logger.info(val);
+          res.status(200).send(val);
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).end();
         });
     } else {

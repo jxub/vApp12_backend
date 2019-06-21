@@ -1,33 +1,32 @@
 /* eslint-disable func-names */
 /* eslint-disable no-unused-vars */
 
-const bcrypt = require("bcrypt");
 const conn = require("../config/conn");
 const logger = require("../config/logger");
+const utils = require("../controllers/utils");
 
-const SALT_ROUNDS = 10;
-const userExists = async (mail, connection = conn) => {
-  const u = await conn
-    .select("*")
-    .from("users")
-    .where("mail", mail);
-
-  if (u.length > 0) {
-    return true;
+class User {
+  constructor(name, mail, company, role) {
+    this.name = name;
+    this.mail = mail;
+    this.company = company;
+    this.role = role;
+    this.conn = conn;
   }
 
-  return false;
-};
-const createAuth = async password => {
-  let [salt, hash, err] = [null, null, null];
-  try {
-    salt = await bcrypt.genSalt(SALT_ROUNDS);
-    hash = await bcrypt.hash(password, salt);
-  } catch (e) {
-    err = e.message;
+  async get() {
+    return utils.getUser(this.mail, this.conn);
   }
-  return [salt, hash, err];
-};
+
+  async exists() {
+    return utils.userExists(this.mail, this.conn);
+  }
+}
+
+// mail name role company
+// mail company -> users table
+// company -> accounts table
+// role -> roles table, description field
 
 // const conn = require("./src/config/conn")
 module.exports = {
@@ -57,7 +56,7 @@ module.exports = {
           res.json(u);
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).json({ message: err });
         });
     } else {
@@ -78,7 +77,7 @@ module.exports = {
           res.json(users);
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).json({ message: err });
         });
     }
@@ -93,7 +92,17 @@ module.exports = {
     ) {
       let roleNotFoundErr;
       let bcryptErr;
-      if (userExists(req.body.mail)) {
+      let userExists;
+      utils
+        .userExists(req.body.mail)
+        .then(exists => {
+          userExists = exists;
+        })
+        .catch(e => {
+          logger.error(e);
+          res.status(500).end();
+        });
+      if (userExists) {
         res.status(400).json({ message: "user already exists" });
       } else {
         let defaultRoleId;
@@ -118,7 +127,8 @@ module.exports = {
 
         let userHash;
         let userSalt;
-        createAuth(req.body.password)
+        utils
+          .createAuth(req.body.password)
           .then(([hash, salt, err]) => {
             [userHash, userSalt, bcryptErr] = [hash, salt, err];
           })
@@ -155,23 +165,83 @@ module.exports = {
     }
   },
   update(req, res, next) {
-    if (req) {
-      res.status(501).json({ message: "Not implemented" });
-    } else {
-      res.status(422).json({ message: "Missing required fields" });
+    if (
+      "mail" in req.query &&
+      "mail" in req.body &&
+      "name" in req.body &&
+      "role" in req.body &&
+      "company" in req.body
+    ) {
+      if (req.query.mail !== req.body.mail) {
+        res.status(400).json({ message: "mail values are different" });
+        return;
+      }
+
+      utils
+        .getUser(req.query.mail, conn)
+        .then(u0 => {
+          conn("users")
+            .where("id", u0.id)
+            .update({
+              mail: req.body.mail,
+              company: req.body.company
+            })
+            .then(u1 => {
+              conn
+                .select("role_id")
+                .from("accounts")
+                .where("id", u0.account_id);
+            })
+            .then(rows => {
+              const roleId = rows[0].role_id;
+              conn("roles")
+                .where("id", roleId)
+                .update({});
+            });
+        })
+        .catch(err => {
+          logger.error(err.message);
+          res.status(500).end();
+        });
     }
   },
+  // deletes the user and it's account
   delete(req, res, next) {
-    if (req.query.id) {
-      dal.users.deleteById(req.query.id, function(err, answer) {
-        if (!err) {
-          res.send(answer);
-        } else {
+    if (req.query.mail) {
+      let user;
+      utils
+        .getUser(req.query.mail, conn)
+        .then(u => {
+          user = u;
+        })
+        .catch(e => {
+          logger.error(e.message);
           res.status(500).end();
-        }
-      });
+        });
+      const [uid, accountId] = [user.id, user.account_id];
+      conn("users")
+        .where("id", uid)
+        .del()
+        .then(v0 => {
+          logger.debug(v0);
+          conn("accounts")
+            .where("id", accountId)
+            .del()
+            .then(v1 => {
+              logger.debug(v1);
+              res.status(200).json({ message: "deleted user and account" });
+            })
+            .catch(e => {
+              logger.error(e.message);
+              res.status(500).end();
+            });
+        })
+        .catch(e => {
+          logger.error(e.message);
+          res.status(500).end();
+        });
     } else {
-      res.status(422).json({ message: "Missing required field" });
+      res.status(422).json({ message: "Missing required param mail" });
     }
   }
 };

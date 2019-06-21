@@ -18,7 +18,7 @@ exports.up = (knex, Promise) => {
   `
     )
     .then(() => logger.info("user_accounts view created"))
-    .catch(err => logger.error(err));
+    .catch(err => logger.error(err.message));
 };
 
 exports.down = (knex, Promise) => {
@@ -29,7 +29,7 @@ exports.down = (knex, Promise) => {
     `
     )
     .then(() => logger.info("user_accounts view deleted"))
-    .catch(err => logger.error(err));
+    .catch(err => logger.error(err.message));
 };
 
 // select usr.idusers, usr.idprojects, acc.username, acc.idaccounts, acc.idroles, rol.accounttype from consulgal.users as usr

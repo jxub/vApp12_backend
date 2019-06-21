@@ -12,7 +12,7 @@ module.exports = {
           res.send(val);
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).end();
         });
     } else if ("alarmid" in req.query) {
@@ -24,7 +24,7 @@ module.exports = {
           res.send(val);
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).end();
         });
     } else if ("id" in req.query) {
@@ -35,7 +35,7 @@ module.exports = {
           res.send(val);
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).end();
         });
     } else {
@@ -46,7 +46,7 @@ module.exports = {
           res.send(val);
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).end();
         });
     }
@@ -74,7 +74,7 @@ module.exports = {
           res.send(val);
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).end();
         });
     } else {
@@ -104,7 +104,7 @@ module.exports = {
           res.send(val);
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).end();
         });
     } else {
@@ -120,7 +120,7 @@ module.exports = {
           res.send(val);
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).end();
         });
     } else {

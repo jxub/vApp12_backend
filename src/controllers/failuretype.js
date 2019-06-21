@@ -12,7 +12,7 @@ module.exports = {
         res.json(rows);
       })
       .catch(err => {
-        logger.error(err);
+        logger.error(err.message);
         res.status(500).end();
       });
   },
@@ -41,7 +41,7 @@ module.exports = {
           res.status(200).json({ message: `updated ${rows}` });
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).json({ message: `${err}` });
         });
     } else {
@@ -58,7 +58,7 @@ module.exports = {
           res.status(200).json({ message: `deleted: ${deleted} row/s` });
         })
         .catch(err => {
-          logger.error(err);
+          logger.error(err.message);
           res.status(500).json({ message: `${err}` });
         });
     } else {

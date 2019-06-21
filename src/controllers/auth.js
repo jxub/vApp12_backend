@@ -1,5 +1,6 @@
 const passport = require("passport");
 const conn = require("./../config/conn");
+const { userExists } = require("../controllers/users");
 
 module.exports = {
   registerV1(req, res, next) {

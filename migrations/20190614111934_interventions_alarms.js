@@ -16,7 +16,7 @@ exports.up = (knex, Promise) => {
   `
     )
     .then(() => logger.info("interventions_alarms view created"))
-    .catch(err => logger.error(err));
+    .catch(err => logger.error(err.message));
 };
 
 exports.down = (knex, Promise) => {
@@ -27,7 +27,7 @@ exports.down = (knex, Promise) => {
     `
     )
     .then(() => logger.info("interventions_alarms view deleted"))
-    .catch(err => logger.error(err));
+    .catch(err => logger.error(err.message));
 };
 
 // select * from failuremanager.interventions as itv inner join failuremanager.alarms as alm on itv.idAlarm = alm.id
