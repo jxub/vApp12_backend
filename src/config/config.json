@@ -1,5 +1,8 @@
 {
     "jwt": {
         "secret": "wertyuioplkjhgfds"
+    },
+    "cors": {
+        "allow": true
     }
 }

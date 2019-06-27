@@ -88,6 +88,6 @@ app.use((err, req, res, next) => {
 // });
 
 const port = process.env.API_PORT || "4200";
-app.listen(port, () => logger.info("API running at ", port));
+app.listen(port, () => logger.info(`API running at ${port}`));
 
 module.exports = app;

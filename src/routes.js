@@ -9,15 +9,9 @@ router.route("/test").get((req, res, next) => {
 
 // API ROUTES
 
-// auth
-router.route("/register").post(ctl.auth.register);
-router.route("/login").post(ctl.auth.login);
-
-// accounts
-router.route("/accounts").get(ctl.accounts.get);
-router.route("/accounts").post(ctl.accounts.create);
-router.route("/accounts").patch(ctl.accounts.update);
-router.route("/accounts").delete(ctl.accounts.delete);
+// auth - TODO
+// router.route("/register").post(ctl.auth.register);
+// router.route("/login").post(ctl.auth.login);
 
 // alarms
 router.route("/alarms").get(ctl.alarms.get);

@@ -3,32 +3,63 @@
 
 const conn = require("../config/conn");
 const logger = require("../config/logger");
-const utils = require("../controllers/utils");
-
-class User {
-  constructor(name, mail, company, role) {
-    this.name = name;
-    this.mail = mail;
-    this.company = company;
-    this.role = role;
-    this.conn = conn;
-  }
-
-  async get() {
-    return utils.getUser(this.mail, this.conn);
-  }
-
-  async exists() {
-    return utils.userExists(this.mail, this.conn);
-  }
-}
+const utils = require("../persistence/utils");
 
 // mail name role company
 // mail company -> users table
 // company -> accounts table
 // role -> roles table, description field
 
-// const conn = require("./src/config/conn")
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+module.exports = {
+  create(req, res, next) {
+    userModel.create(
+      {
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+      },
+      function(err, result) {
+        if (err) next(err);
+        else
+          res.json({
+            status: "success",
+            message: "User added successfully!!!",
+            data: null
+          });
+      }
+    );
+  },
+  authenticate(req, res, next) {
+    userModel.findOne({ email: req.body.email }, function(err, userInfo) {
+      if (err) {
+        next(err);
+      } else {
+        if (bcrypt.compareSync(req.body.password, userInfo.password)) {
+          const token = jwt.sign(
+            { id: userInfo._id },
+            req.app.get("secretKey"),
+            { expiresIn: "1h" }
+          );
+          res.json({
+            status: "success",
+            message: "user found!!!",
+            data: { user: userInfo, token: token }
+          });
+        } else {
+          res.json({
+            status: "error",
+            message: "Invalid email/password!!!",
+            data: null
+          });
+        }
+      }
+    });
+  }
+};
+
 module.exports = {
   get(req, res, next) {
     if ("mail" in req.query) {
@@ -107,7 +138,7 @@ module.exports = {
       } else {
         let defaultRoleId;
         const defaultDescription = "default-0";
-        conn("roles")
+        conn
           .select("id")
           .from("roles")
           .where("description", defaultDescription)
